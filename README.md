@@ -64,11 +64,33 @@ Sugestões de cards no Metabase (sobre `bi.kpi_daily`, filtrando `amount_transac
 
 ## 4) Insights & Recomendações (claramente articulados)
 
-- **Mix por produto/método:** “tap/link/pos” costumam puxar TPV; **crédito** tende a elevar **ticket médio**. Direcione UX/campanhas nesses canais.  
-- **Parcelamento como alavanca:** testes de limite/juros subsidiados por categoria aumentam ticket; monitore **take rate** e risco.  
-- **Price tier (faixas de tarifa):** compare TPV/Tx/Avg Ticket por `price_tier`; avalie **tiers dinâmicos** (benefícios a alto LTV/baixo risco; revisão de margem onde necessário).  
-- **Crescimento limpo:** acompanhe TPV **ex-top merchants** e metas de diversificação para evitar concentração.  
-- **Coortes de lojistas:** quebre KPIs por tempo de casa (0–30/31–60/61–90 dias) para acelerar ramp-up e reduzir churn inicial.
+- **Sazonalidade semanal relevante.**  
+  *Insight:* TPV varia fortemente por dia da semana.  
+  *Ação:* Compare sempre com **W-1 do mesmo DOW** e calibre metas/alertas por DOW.
+
+- **Canais principais puxam o volume (tap/link/pos).**  
+  *Insight:* Esses produtos concentram TPV.  
+  *Ação:* Priorize otimizações de conversão por canal e campanhas nos dias de menor demanda.
+
+- **Método de pagamento segmenta o resultado.**  
+  *Insight:* Crédito sustenta **ticket**; Pix sustenta **frequência**.  
+  *Ação:* Use **parcelamento** (+ antecipação) para elevar ticket no crédito e **recompra** para aumentar recorrência no Pix.
+
+- **Parcelamento aumenta ticket com custo.**  
+  *Insight:* Mais parcelas → TPV cresce mais que Tx.  
+  *Ação:* Teste limites/juros por categoria e monitore **take rate**, margem e risco.
+
+- **Diferenças por price tier.**  
+  *Insight:* Métricas (TPV/Tx/Avg Ticket) variam por tier.  
+  *Ação:* Adote **tiers dinâmicos** (benefícios a alto LTV/baixo risco; revisão onde a margem não fecha).
+
+- **Concentração em grandes contas.**  
+  *Insight:* Parte do crescimento pode estar em poucos lojistas.  
+  *Ação:* Acompanhe **TPV ex-top** e defina metas de diversificação.
+
+- **Primeiros 60 dias da coorte são críticos.**  
+  *Insight:* Ramp-up/abandono ocorre cedo.  
+  *Ação:* Fortaleça onboarding com nudges, habilitação de parcelas/antecipação e follow-ups automáticos; meça retenção por coorte.
 
 ---
 

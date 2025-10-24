@@ -1,0 +1,57 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: pg-local
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: metabase
+      POSTGRES_PASSWORD: metabase
+      POSTGRES_DB: analytics        # <- vamos manter ESTE nome
+      TZ: America/Sao_Paulo
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U metabase -d analytics"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase-local
+    restart: unless-stopped
+    environment:
+      MB_DB_FILE: /metabase-data/metabase.db
+      TZ: America/Sao_Paulo
+    ports:
+      - "3000:3000"
+    volumes:
+      - metabase_data:/metabase-data
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # Job que SEMPRE aplica schema/tabelas no DB 'analytics'
+  db_setup:
+    image: postgres:16
+    container_name: db-setup
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGPASSWORD: metabase
+    volumes:
+      - ./sql:/sql:ro
+    command: >
+      bash -lc '
+        echo "Aplicando schema/tabelas no analytics..." &&
+        psql -h postgres -U metabase -d analytics -v ON_ERROR_STOP=1 -f /sql/00_bootstrap.sql &&
+        echo "db_setup OK"
+      '
+    restart: "no"
+
+volumes:
+  pgdata:
+  metabase_data:

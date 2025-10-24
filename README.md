@@ -21,7 +21,7 @@
 .
 ├─ connectors/               # módulo de conexão (SessionConnector)
 ├─ data/                     # CSV(s) de entrada
-├─ metricts/                 # PDFs exportados do Metabase (snapshots)  ← (sugestão: renomear para 'metrics')
+├─ metricts/                 # PDFs exportados do Metabase
 ├─ reports/                  # relatórios gerados pelo kpi_bot (MD + PDF)
 ├─ sql/                      # scripts SQL (schema/tabelas/views opcionais)
 ├─ chatbot.py                # esqueleto de chatbot/LLM (opcional)
@@ -64,7 +64,6 @@ Sugestões de cards no Metabase (sobre `bi.kpi_daily`, filtrando `amount_transac
 
 ## 4) Insights & Recomendações (claramente articulados)
 
-- **Sazonalidade por dia-da-semana:** use baseline por **DOW** (média móvel por DOW) para metas e alertas; reduz falsos alarmes em fins de semana/feriados.  
 - **Mix por produto/método:** “tap/link/pos” costumam puxar TPV; **crédito** tende a elevar **ticket médio**. Direcione UX/campanhas nesses canais.  
 - **Parcelamento como alavanca:** testes de limite/juros subsidiados por categoria aumentam ticket; monitore **take rate** e risco.  
 - **Price tier (faixas de tarifa):** compare TPV/Tx/Avg Ticket por `price_tier`; avalie **tiers dinâmicos** (benefícios a alto LTV/baixo risco; revisão de margem onde necessário).  
@@ -106,18 +105,4 @@ python kpi_bot.py
 - Compara **D-1 / W-1 / M-1** e gera **alertas** por segmento (z < −2).  
 - Saída em `./reports/kpi_report_YYYY-MM-DD.md` e `./reports/kpi_report_YYYY-MM-DD.pdf`.
 
----
 
-## 6) Troubleshooting
-
-- **Relatório zerado:** verifique dados no dia-alvo; o bot já faz fallback para `MAX(date)` na base. Confirme tipos numéricos de `amount_transacted` e `quantity_transactions`.  
-- **Texto estourando no PDF:** os cards usam **título em cima + valor embaixo** e **fonte adaptativa**; se precisar, reduza `colWidths` em `build_kpi_cards`.  
-- **Diretório “metricts”:** é provavelmente um *typo*; renomear para `metrics` melhora a padronização.
-
----
-
-## 7) Próximos passos
-
-- Incluir **receita/take rate** para análises de margem por tier/produto/método.  
-- Agendar `kpi_bot.py` (cron/Task Scheduler) para envio automático do PDF (e-mail/Slack).  
-- Criar *views* no Postgres para **DoD/WoW/MoM** e **baseline por DOW**, conectando-as a cards do Metabase.
